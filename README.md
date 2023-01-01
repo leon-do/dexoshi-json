@@ -6,6 +6,13 @@ Format images, json files and metadata.json to upload to IPFS
 
 move all raw images to `rawImgs`
 
+remove example files
+
+```bash
+rm ./editedImgs/*
+rm ./json/*
+```
+
 update index.js
 
 ```javascript
