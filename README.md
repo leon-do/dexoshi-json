@@ -18,6 +18,7 @@ update index.js
 ```javascript
 const METADATA_CID = "ipfs://bafybeie7bjhof6patydr7i6nv5cj4tbujz2t3ahazxaie5rvyjdnduoq4m";
 const GATEWAY = "https://nftstorage.link/ipfs/bafybeicp7ku5ls4e2mab42lobr3a7vviuzus26v3kz5vjjbkdcfvcsu5om";
+const EXTERNAL_URL = "https://twitter.com/dexoshi";
 ```
 
 `node index.js`
