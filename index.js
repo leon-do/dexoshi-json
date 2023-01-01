@@ -6,6 +6,9 @@ const GATEWAY = "https://nftstorage.link/ipfs/bafybeicp7ku5ls4e2mab42lobr3a7vviu
 
 main();
 async function main() {
+  // combines all metadata
+  let json = [];
+
   // get files from ./rawImgs
   const rawImgs = fs.readdirSync("./rawImgs");
 
@@ -16,14 +19,16 @@ async function main() {
     const number = String(index).padStart(5, "0");
 
     // create json file
-    const json = {
+    const obj = {
       number: `${description} #${number}`,
       image: `${METADATA_CID}/${number}.${extension}`,
       gateway: `${GATEWAY}/${number}.${extension}`,
       description,
     };
+    // add to json array
+    json.push(obj);
     // write json file
-    fs.writeFileSync(`./json/${number}.json`, JSON.stringify(json, null, 2));
+    fs.writeFileSync(`./json/${number}.json`, JSON.stringify(obj, null, 2));
 
     // edit image
     sharp(`./rawImgs/${rawImgs[index]}`)
@@ -35,4 +40,7 @@ async function main() {
       ])
       .toFile(`./editedImgs/${number}.${extension}`);
   }
+
+  // write json file
+  fs.writeFileSync("./json/_metadata.json", JSON.stringify(json, null, 2));
 }
