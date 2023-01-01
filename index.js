@@ -3,6 +3,7 @@ const sharp = require("sharp");
 
 const METADATA_CID = "ipfs://bafybeie7bjhof6patydr7i6nv5cj4tbujz2t3ahazxaie5rvyjdnduoq4m";
 const GATEWAY = "https://nftstorage.link/ipfs/bafybeicp7ku5ls4e2mab42lobr3a7vviuzus26v3kz5vjjbkdcfvcsu5om";
+const EXTERNAL_URL = "https://twitter.com/dexoshi";
 
 main();
 async function main() {
@@ -20,10 +21,25 @@ async function main() {
 
     // create json file
     const obj = {
-      number: `${description} #${number}`,
+      name: `${description} #${number}`,
       image: `${METADATA_CID}/${number}.${extension}`,
       gateway: `${GATEWAY}/${number}.${extension}`,
       description,
+      external_url: EXTERNAL_URL,
+      attributes: [
+        {
+          trait_type: "ID",
+          value: number,
+        },
+        {
+          trait_type: "Animal",
+          value: description.split(" ").pop(),
+        },
+        {
+          trait_type: "Name",
+          value: description.split(" ")[0],
+        },
+      ],
     };
     // add to json array
     json.push(obj);
