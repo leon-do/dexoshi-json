@@ -9,7 +9,5 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "dependencies": {
-    "jimp": "^0.16.2"
-  }
+  "dependencies": {}
 }
