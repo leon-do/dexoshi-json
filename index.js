@@ -1,8 +1,7 @@
 const fs = require("fs");
-const sharp = require("sharp");
 
-const METADATA_CID = "ipfs://bafybeie7bjhof6patydr7i6nv5cj4tbujz2t3ahazxaie5rvyjdnduoq4m";
-const GATEWAY = "https://nftstorage.link/ipfs/bafybeicp7ku5ls4e2mab42lobr3a7vviuzus26v3kz5vjjbkdcfvcsu5om";
+// images CID 
+const IMAGE_CID = "bafybeiea3hbjmkupql6yk5m2m67dupummwva3oa227x6jig4663nfravti";
 const EXTERNAL_URL = "https://twitter.com/dexoshi";
 
 main();
@@ -22,8 +21,9 @@ async function main() {
     // create json file
     const obj = {
       name: `${description} #${number}`,
-      image: `${METADATA_CID}/${number}.${extension}`,
-      gateway: `${GATEWAY}/${number}.${extension}`,
+      image: `ipfs://${IMAGE_CID}/${number}.${extension}`,
+      gateway: `https://nftstorage.link/ipfs/${IMAGE_CID}/${number}.${extension}`,
+      cacheImage: `https://raw.githubusercontent.com/leon-do/dexoshi-json/main/editedImgs/${number}.png`,
       description,
       external_url: EXTERNAL_URL,
       attributes: [
@@ -46,15 +46,8 @@ async function main() {
     // write json file
     fs.writeFileSync(`./json/${number}.json`, JSON.stringify(obj, null, 2));
 
-    // edit image
-    sharp(`./rawImgs/${rawImgs[index]}`)
-      .composite([
-        {
-          input: Buffer.from('<svg><rect x="0" y="0" width="960" height="1568" rx="50" ry="50"/></svg>'),
-          blend: "dest-in",
-        },
-      ])
-      .toFile(`./editedImgs/${number}.${extension}`);
+    // copy image to ./imgs
+    await fs.copyFileSync(`./rawImgs/${description}.${extension}`, `./editedImgs/${number}.${extension}`);
   }
 
   // write json file
